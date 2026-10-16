@@ -4,9 +4,257 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="problems.js" defer></script>
-    <title>Document</title>
+    <title>Small JavaScript Scenarios</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+            background: #f4f3ed;
+            color: #1e2926;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: radial-gradient(ellipse at 88% 10%, #e8c9a8 0, transparent 27%), #f4f3ed;
+        }
+
+        main {
+            width: min(100% - 40px, 980px);
+            margin: 0 auto;
+            padding: 64px 0 48px;
+        }
+
+        .eyebrow {
+            margin: 0 0 18px;
+            color: #bd573b;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 720px;
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(42px, 7vw, 76px);
+            font-weight: 400;
+            line-height: 1.02;
+        }
+
+        .intro {
+            max-width: 650px;
+            margin: 24px 0 0;
+            color: #53615b;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .divider {
+            height: 1px;
+            margin: 44px 0 30px;
+            border: 0;
+            background: #d8d8cf;
+        }
+
+        .section-label {
+            margin: 0 0 18px;
+            color: #68746d;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .example {
+            min-height: 132px;
+            padding: 22px;
+            border: 1px solid #deded5;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.58);
+        }
+
+        .example-number {
+            display: block;
+            margin-bottom: 17px;
+            color: #bd573b;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 14px;
+        }
+
+        .example h2 {
+            margin: 0 0 7px;
+            font-size: 18px;
+        }
+
+        .example p {
+            margin: 0;
+            color: #68746d;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .exercise-form { margin-top: 22px; }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .field-grid.three-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+        .exercise-form label {
+            display: grid;
+            gap: 7px;
+            color: #53615b;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .exercise-form input {
+            width: 100%;
+            min-width: 0;
+            padding: 11px 12px;
+            border: 1px solid #c9cec4;
+            border-radius: 4px;
+            background: #fff;
+            color: #1e2926;
+            font: inherit;
+            font-size: 16px;
+        }
+
+        .exercise-form input:focus {
+            outline: 2px solid #bd573b;
+            outline-offset: 2px;
+        }
+
+        .exercise-form button {
+            margin-top: 16px;
+            padding: 11px 15px;
+            border: 0;
+            border-radius: 4px;
+            background: #285b4b;
+            color: #fff;
+            cursor: pointer;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .exercise-form button:hover { background: #1e493b; }
+
+        .result {
+            min-height: 46px;
+            margin: 14px 0 0;
+            padding: 12px;
+            border-radius: 4px;
+            background: #edf0e8;
+            color: #35443e;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .console-note {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 22px;
+            padding: 18px 20px;
+            border-left: 3px solid #bd573b;
+            background: #e8e9df;
+            color: #35443e;
+            line-height: 1.6;
+        }
+
+        kbd {
+            flex: 0 0 auto;
+            padding: 5px 8px;
+            border: 1px solid #c8ccc0;
+            border-radius: 4px;
+            background: #f8f8f3;
+            color: #25332d;
+            font-family: Consolas, monospace;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            main { width: min(100% - 32px, 980px); padding-top: 44px; }
+            .examples { grid-template-columns: 1fr; }
+            .console-note { align-items: flex-start; }
+        }
+
+        @media (max-width: 420px) {
+            .field-grid.three-fields { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    
+    <main>
+        <p class="eyebrow">A small JavaScript practice space</p>
+        <h1>Small problems.<br>Many possible cases.</h1>
+        <p class="intro">
+            This page is dedicated to building bite-sized, multi-case scenarios with the fundamentals of JavaScript.
+            Each exercise takes a familiar situation, turns it into a little bit of logic, and explores how the result
+            changes when the inputs do.
+        </p>
+
+        <hr class="divider">
+
+        <p class="section-label">In this set</p>
+        <section class="examples" aria-label="Current JavaScript exercises">
+            <article class="example">
+                <span class="example-number">01 / SPORTS</span>
+                <h2>Cricket strike rate</h2>
+                <p>Enter the batter's runs and balls faced to see their strike rate category.</p>
+                <form class="exercise-form" id="cricket-form">
+                    <div class="field-grid">
+                        <label for="runs">Runs scored
+                            <input id="runs" name="runs" type="number" min="0" max="300" step="1" placeholder="e.g. 60" required>
+                        </label>
+                        <label for="balls">Balls faced
+                            <input id="balls" name="balls" type="number" min="1" max="300" step="1" placeholder="e.g. 30" required>
+                        </label>
+                    </div>
+                    <button type="submit">Calculate strike rate</button>
+                    <p class="result" id="cricket-result" aria-live="polite">Your result will appear here.</p>
+                </form>
+            </article>
+            <article class="example">
+                <span class="example-number">02 / GAME LOGIC</span>
+                <h2>Battle results</h2>
+                <p>Set the player's health, an incoming attack, and their shield strength.</p>
+                <form class="exercise-form" id="battle-form">
+                    <div class="field-grid three-fields">
+                        <label for="health">Health
+                            <input id="health" name="health" type="number" min="0" max="1000" step="1" placeholder="e.g. 100" required>
+                        </label>
+                        <label for="attack">Attack
+                            <input id="attack" name="attack" type="number" min="0" max="1000" step="1" placeholder="e.g. 50" required>
+                        </label>
+                        <label for="shield">Shield
+                            <input id="shield" name="shield" type="number" min="0" max="700" step="1" placeholder="e.g. 20" required>
+                        </label>
+                    </div>
+                    <button type="submit">Calculate battle result</button>
+                    <p class="result" id="battle-result" aria-live="polite">Your result will appear here.</p>
+                </form>
+            </article>
+        </section>
+
+        <aside class="console-note">
+            <kbd>F12</kbd>
+            <span>Submit an exercise to see its result here and in your browser developer tools under <strong>Console</strong>.</span>
+        </aside>
+    </main>
 </body>
 </html>
