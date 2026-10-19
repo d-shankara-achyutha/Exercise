@@ -1,425 +1,399 @@
-function space() {
-    console.log("");
-}
-
-//Problem 1
-//Cricket Strike Rate
-
 function strikeRate(runs, balls) {
     return (runs / balls) * 100;
 }
 
 function playerType(runs, balls) {
-    if (runs === undefined || balls === undefined) {
-        return "Missing Arguments";
-    }
-
     if (runs < 0 || balls <= 0) {
-        return "Invalid Output";
+        return "Invalid input";
     }
 
     const rate = strikeRate(runs, balls);
-
-    if (rate >= 150) {
-        return "Power Hitter";
-    } else if (rate >= 100) {
-        return "Steady Batter";
-    } else {
-        return "Slow Batter";
-    }
+    if (rate >= 150) return "Power hitter";
+    if (rate >= 100) return "Steady batter";
+    return "Slow batter";
 }
 
-// console.log(playerType(60, 30));
-// console.log(playerType(20, 40));
-// console.log(playerType(10, 0));
-// console.log(playerType());
-
-document.getElementById("cricket-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const runs = Number(document.getElementById("runs").value);
-    const balls = Number(document.getElementById("balls").value);
-    const rate = strikeRate(runs, balls);
-    const category = playerType(runs, balls);
-    const result = `${category} - strike rate: ${rate.toFixed(1)}`;
-
-    document.getElementById("cricket-result").textContent = result;
-    console.log(result);
-});
-
-
-
-space()
-//Problem 2
-//Game Battle
-
 function damage(attack, shield) {
-    const netDamage = attack - shield;
-    return netDamage > 0 ? netDamage : 0;
+    return Math.max(attack - shield, 0);
 }
 
 function healthLeft(health, attack, shield) {
-    const damageTaken = damage(attack, shield);
-    const remainingHealth = health - damageTaken;
-    return remainingHealth > 0 ? remainingHealth : 0;
+    return Math.max(health - damage(attack, shield), 0);
 }
 
 function battleResult(health, attack, shield) {
     const remainingHealth = healthLeft(health, attack, shield);
-
-    if (remainingHealth === 0) {
-        return "Player Defeated";
-    } else if (remainingHealth <= 30) {
-        return "Low Health";
-    } else {
-        return "Still Fighting";
-    }
+    if (remainingHealth === 0) return "Player defeated";
+    if (remainingHealth <= 30) return "Low health";
+    return "Still fighting";
 }
-
-// console.log(battleResult(100, 50, 20));
-// console.log(battleResult(100, 90, 15));
-// console.log(battleResult(100, 10, 30));
-
-document.getElementById("battle-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const health = Number(document.getElementById("health").value);
-    const attack = Number(document.getElementById("attack").value);
-    const shield = Number(document.getElementById("shield").value);
-    const result = battleResult(health, attack, shield);
-
-    document.getElementById("battle-result").textContent = result;
-    console.log(result);
-});
-
-const inputStorageKey = "small-js-scenario-inputs";
-let savedInputs = {};
-
-try {
-    const storedInputs = localStorage.getItem(inputStorageKey);
-    const parsedInputs = storedInputs ? JSON.parse(storedInputs) : {};
-    if (parsedInputs && typeof parsedInputs === "object" && !Array.isArray(parsedInputs)) {
-        savedInputs = parsedInputs;
-    }
-} catch {
-    savedInputs = {};
-}
-
-document.querySelectorAll(".exercise-form input").forEach(function (input) {
-    if (Object.prototype.hasOwnProperty.call(savedInputs, input.id)) {
-        input.value = savedInputs[input.id];
-    }
-
-    function enforceMaximum() {
-        if (input.max !== "" && input.value !== "" && input.valueAsNumber > Number(input.max)) {
-            input.value = input.max;
-        }
-    }
-
-    enforceMaximum();
-    savedInputs[input.id] = input.value;
-
-    input.addEventListener("input", function () {
-        enforceMaximum();
-        savedInputs[input.id] = input.value;
-        try {
-            localStorage.setItem(inputStorageKey, JSON.stringify(savedInputs));
-        } catch {
-            // Keep the form usable if browser storage is unavailable.
-        }
-    });
-});
-
-try {
-    localStorage.setItem(inputStorageKey, JSON.stringify(savedInputs));
-} catch {
-    // Keep the form usable if browser storage is unavailable.
-}
-
-
-
-//Rough Work
-//Problem 3
-// Printing "n" numbers
 
 function printNumbers(n) {
-    let result = "";
-
-    for (let i = 1; i <= n; i++) {
-        result += i + " ";
-    }
-    console.log(result.trim());
+    return Array.from({ length: n }, (_, index) => index + 1).join(", ") || "No numbers";
 }
-
-printNumbers(5);
-
-
-
-//Problem 4
-//Even or Odd
 
 function checkEvenOdd(num) {
     return num % 2 === 0 ? "Even" : "Odd";
 }
 
-console.log(checkEvenOdd(14));
-
-
-
-//Problem 5
-//Largest of the Three
-
 function largest(a, b, c) {
-    if (a >= b && a >= c) {
-        return `Largest: ${a}`;
-    } else if (b >= a && b >= c) {
-        return `Largest: ${b}`;
-    } else {
-        return `Largest: ${c}`;
-    }
+    return `Largest: ${Math.max(a, b, c)}`;
 }
-
-console.log(largest(12, 27, 19));
-
-
-
-//Problem 6
-//Sum of "n" numbers
 
 function sumNumbers(n) {
-    let sum = 0;
-
-    for (let i = 1; i <= n; i++) {
-        sum = sum + 1;
-    }
-    return sum;
+    return n * (n + 1) / 2;
 }
 
-console.log(sumNumbers(10));
-
-
-//Problem 6
-//Multiplication table
-
-let tableNum = 3;
-
-for (let j = 1; j <= 10; j++) {
-    console.log(`${tableNum} * ${j} = ${tableNum * j}`);
+function multiplicationTable(num) {
+    return Array.from({ length: 10 }, (_, index) => `${num} × ${index + 1} = ${num * (index + 1)}`).join("\n");
 }
 
-
-
-//Problem 7
-//Counting the Digits
 function countDigits(num) {
-    let count = 0;
-    do {
-        count++;
-        num = Math.floor(num / 10);
-    } while (num > 0);
-    return count;
+    return String(Math.abs(num)).length;
 }
-
-console.log(countDigits(5082));
-
-
-
-//Problem 8
-//Reversing the digits
 
 function reverseNumber(num) {
-    let rev = 0;
-
-    while(num > 0) {
-        rev = rev * 10 + (num % 10);
-        num = Math.floor(num/10);
-    }
-    return rev;
+    const sign = Math.sign(num);
+    const reversed = Number(String(Math.abs(num)).split("").reverse().join(""));
+    return sign * reversed;
 }
-
-console.log(reverseNumber(12040));
-
-
-
-//Problem 9
-//Check a palindrome
 
 function isPalindrome(num) {
-    let original = num;
-    let rev = 0;
-
-    while(num > 0) {
-        rev = rev*10 +(num %10);
-        num = Math.floor(num/10);
-    }
-
-    return original === rev ? "Palindrome" : "Not Palindrome"
+    const digits = String(num);
+    return digits === Array.from(digits).reverse().join("") ? "Palindrome" : "Not palindrome";
 }
-
-console.log(isPalindrome(1221));
-
-
-
-//Problem 10
-//Factorial of a Number
 
 function factorial(num) {
-    let fact = 1;
-    
-    for(let i=1; i <= num; i++) {
-        fact = fact*i;
-    } 
-
-    return fact;
+    let result = 1;
+    for (let factor = 2; factor <= num; factor++) {
+        result *= factor;
+    }
+    return result;
 }
-
-console.log(factorial(5));
-
-
-
-//Problem 11
-//Fibonacci Sequence
 
 function fibonacci(num) {
-    let a =0, b = 1, result = "";
+    const sequence = [];
+    let current = 0;
+    let next = 1;
 
-    for(let i = 1; i <= num; i++) {
-        result += a + " ";
-        let c = a + b;
-        a = b;
-        b = c;
+    for (let index = 0; index < num; index++) {
+        sequence.push(current);
+        [current, next] = [next, current + next];
     }
 
-    console.log(result.trim());
+    return sequence.join(", ") || "No terms";
 }
 
-fibonacci(7);
-
-
-
-//Problem 12
-//Check Prime Numbers
-
-function isPrime(num) {
-    if (num < 2) {
-        return "Not Prime";
+function isPrimeNumber(num) {
+    if (num < 2) return false;
+    for (let divisor = 2; divisor <= Math.sqrt(num); divisor++) {
+        if (num % divisor === 0) return false;
     }
-
-    for(let i = 2; i < num; i++) {
-        if(num % i === 0) {
-            return "Not Prime";
-        }
-    }
-
-    return "Prime";
+    return true;
 }
 
-console.log(isPrime(17));
-
-
-
-//Prolem 13
-//Printing all Prime Numbers in a Range
-
 function isPrime(num) {
-    if (num < 2) {
-        return "Not Prime";
-    }
-
-    for(let i = 2; i < num; i++) {
-        if(num % i === 0) {
-            return "Not Prime";
-        }
-    }
-
-    return "Prime";
+    return isPrimeNumber(num) ? "Prime" : "Not prime";
 }
 
 function printPrimes(start, end) {
-    let result = "";
-
-    for (let num = start; num <= end; num++) {
-        if(isPrime(num)) {
-            result += num + " ";
-        }
+    const primes = [];
+    for (let num = Math.max(2, start); num <= end; num++) {
+        if (isPrimeNumber(num)) primes.push(num);
     }
-    console.log(result.trim());
+    return primes.join(", ") || "No primes in this range";
 }
 
-printPrimes(10, 20);
-
-//Problem 14
-//Greatest Common Divisor
-
 function findGCD(a, b) {
-    while(b !== 0) {
-        let temp = b;
-        b = a % b;
-        a = temp;
+    a = Math.abs(a);
+    b = Math.abs(b);
+    while (b !== 0) {
+        [a, b] = [b, a % b];
     }
     return a;
 }
 
-console.log(findGCD(18, 24));
-
-//Problem 15
-//Check Armstrong Number
-
 function isArmstrong(num) {
-    let original = num;
-    let temp = num;
-    let count = 0;
-    let sum = 0;
-
-    do {
-        count++;
-        temp = Math.floor(temp/10);
-    } while (temp > 0);
-
-        temp = num;
-
-        while(temp >0) {
-            let digit = temp % 10;
-            sum += digit ** count;
-            temp = Math.floor(temp/10);
-        }
-
-        return sum === original ? "Armstrong Number" : "Not Armstrong Number"   
+    const digits = String(num).split("").map(Number);
+    const power = digits.length;
+    const sum = digits.reduce((total, digit) => total + digit ** power, 0);
+    return sum === num ? "Armstrong number" : "Not an Armstrong number";
 }
-
-console.log(isArmstrong(153));
-
-
-
-//Problem 16
-//Counting Vowels in a String(Ignoring Vowels)
 
 function countVowels(str) {
-    let count = 0;
-    str = str.toLowerCase();
-
-    for (let i = 0; i < str.length; i++) {
-        if("aeiou".includes(str[i])) {
-            count++;
-        }
-    }
-    return count;
+    return (str.match(/[aeiou]/gi) || []).length;
 }
-
-console.log(countVowels("JavaScript is fun - Only when learnt Properly"));
-
-
-
-//Prolem 17
-//Reversing a String
 
 function reverseString(str) {
-    let rev = "";
-
-    for(let i=str,length - 1; i >= 0; i--) {
-        rev += str[i]
-    }
-    return rev;
+    return Array.from(str).reverse().join("");
 }
 
-console.log(reverseString("Hello World"));
+function isStringPalindrome(str) {
+    const normalized = str.toLowerCase().replace(/[^a-z0-9]/g, "");
+    return normalized === Array.from(normalized).reverse().join("") ? "Palindrome" : "Not palindrome";
+}
+
+function parseNumberList(value) {
+    const items = value.split(",").map((item) => item.trim());
+    if (items.some((item) => item === "" || !Number.isFinite(Number(item)))) {
+        throw new Error("Enter a comma-separated list of numbers.");
+    }
+    return items.map(Number);
+}
+
+function largestElement(arr) {
+    return Math.max(...arr);
+}
+
+function removeDuplicates(arr) {
+    return [...new Set(arr)];
+}
+
+function charfrequency(str) {
+    const frequencies = new Map();
+    for (const character of str) {
+        frequencies.set(character, (frequencies.get(character) || 0) + 1);
+    }
+    return Object.fromEntries(frequencies);
+}
+
+const exercises = [
+    {
+        title: "Cricket strike rate",
+        description: "Categorize a batter from runs and balls faced.",
+        fields: [
+            { key: "runs", label: "Runs", placeholder: "60", min: 0 },
+            { key: "balls", label: "Balls", placeholder: "30", min: 1 }
+        ],
+        run: ({ runs, balls }) => `${playerType(runs, balls)} — strike rate: ${strikeRate(runs, balls).toFixed(1)}`
+    },
+    {
+        title: "Battle results",
+        description: "Calculate remaining health after an attack and shield.",
+        fields: [
+            { key: "health", label: "Health", placeholder: "100", min: 0 },
+            { key: "attack", label: "Attack", placeholder: "50", min: 0 },
+            { key: "shield", label: "Shield", placeholder: "20", min: 0 }
+        ],
+        run: ({ health, attack, shield }) => `${battleResult(health, attack, shield)} — ${healthLeft(health, attack, shield)} health left`
+    },
+    {
+        title: "Print numbers",
+        description: "List every number from 1 up to n.",
+        fields: [{ key: "n", label: "n", placeholder: "5", min: 0, max: 1000 }],
+        run: ({ n }) => printNumbers(n)
+    },
+    {
+        title: "Even or odd",
+        description: "Check whether an integer is even or odd.",
+        fields: [{ key: "num", label: "Number", placeholder: "14" }],
+        run: ({ num }) => checkEvenOdd(num)
+    },
+    {
+        title: "Largest of three",
+        description: "Compare three numbers and return the largest.",
+        fields: [
+            { key: "a", label: "A", placeholder: "12" },
+            { key: "b", label: "B", placeholder: "27" },
+            { key: "c", label: "C", placeholder: "19" }
+        ],
+        run: ({ a, b, c }) => largest(a, b, c)
+    },
+    {
+        title: "Sum from 1 to n",
+        description: "Add all integers from 1 through n.",
+        fields: [{ key: "n", label: "n", placeholder: "10", min: 0, max: 1000000 }],
+        run: ({ n }) => `Sum: ${sumNumbers(n)}`
+    },
+    {
+        title: "Multiplication table",
+        description: "Show the first ten multiples of a number.",
+        fields: [{ key: "num", label: "Number", placeholder: "3" }],
+        run: ({ num }) => multiplicationTable(num)
+    },
+    {
+        title: "Count digits",
+        description: "Count the digits in an integer.",
+        fields: [{ key: "num", label: "Number", placeholder: "5082" }],
+        run: ({ num }) => `Digits: ${countDigits(num)}`
+    },
+    {
+        title: "Reverse a number",
+        description: "Reverse the digits of an integer.",
+        fields: [{ key: "num", label: "Number", placeholder: "12040" }],
+        run: ({ num }) => `Reversed: ${reverseNumber(num)}`
+    },
+    {
+        title: "Number palindrome",
+        description: "Check whether the digits read the same backward.",
+        fields: [{ key: "num", label: "Number", placeholder: "1221", min: 0 }],
+        run: ({ num }) => isPalindrome(num)
+    },
+    {
+        title: "Factorial",
+        description: "Multiply every integer from 1 through n.",
+        fields: [{ key: "num", label: "n (0–170)", placeholder: "5", min: 0, max: 170 }],
+        run: ({ num }) => `${num}! = ${factorial(num)}`
+    },
+    {
+        title: "Fibonacci sequence",
+        description: "Show the first n terms, starting at zero.",
+        fields: [{ key: "num", label: "Terms", placeholder: "7", min: 0, max: 100 }],
+        run: ({ num }) => fibonacci(num)
+    },
+    {
+        title: "Prime check",
+        description: "Check whether an integer is prime.",
+        fields: [{ key: "num", label: "Number", placeholder: "17", min: 0 }],
+        run: ({ num }) => isPrime(num)
+    },
+    {
+        title: "Primes in a range",
+        description: "List prime numbers between the start and end.",
+        fields: [
+            { key: "start", label: "Start", placeholder: "10" },
+            { key: "end", label: "End", placeholder: "30" }
+        ],
+        run: ({ start, end }) => printPrimes(start, end)
+    },
+    {
+        title: "Greatest common divisor",
+        description: "Find the greatest common divisor of two integers.",
+        fields: [
+            { key: "a", label: "A", placeholder: "18" },
+            { key: "b", label: "B", placeholder: "24" }
+        ],
+        run: ({ a, b }) => `GCD: ${findGCD(a, b)}`
+    },
+    {
+        title: "Armstrong number",
+        description: "Check whether the digits raised to their count sum to the number.",
+        fields: [{ key: "num", label: "Number", placeholder: "153", min: 0 }],
+        run: ({ num }) => isArmstrong(num)
+    },
+    {
+        title: "Count vowels",
+        description: "Count a, e, i, o and u in the text.",
+        fields: [{ key: "text", label: "Text", placeholder: "JavaScript is fun", type: "text" }],
+        run: ({ text }) => `Vowels: ${countVowels(text)}`
+    },
+    {
+        title: "Reverse a string",
+        description: "Read the text from its last character to its first.",
+        fields: [{ key: "text", label: "Text", placeholder: "Hello World", type: "text" }],
+        run: ({ text }) => reverseString(text)
+    },
+    {
+        title: "String palindrome",
+        description: "Check text ignoring spaces, punctuation and letter case.",
+        fields: [{ key: "text", label: "Text", placeholder: "Never odd or even", type: "text" }],
+        run: ({ text }) => isStringPalindrome(text)
+    },
+    {
+        title: "Largest in a list",
+        description: "Enter comma-separated numbers to find the largest.",
+        fields: [{ key: "values", label: "Numbers", placeholder: "5, 4, 19, 2", type: "text" }],
+        run: ({ values }) => `Largest: ${largestElement(parseNumberList(values))}`
+    },
+    {
+        title: "Remove duplicates",
+        description: "Keep the first occurrence of each comma-separated number.",
+        fields: [{ key: "values", label: "Numbers", placeholder: "7, 4, 2, 4, 5", type: "text" }],
+        run: ({ values }) => removeDuplicates(parseNumberList(values)).join(", ")
+    },
+    {
+        title: "Character frequency",
+        description: "Count how many times each character appears.",
+        fields: [{ key: "text", label: "Text", placeholder: "banana", type: "text" }],
+        run: ({ text }) => JSON.stringify(charfrequency(text))
+    }
+];
+
+function renderExercises() {
+    const rows = document.getElementById("exercise-rows");
+
+    exercises.forEach((exercise, index) => {
+        const row = document.createElement("tr");
+        const numberCell = document.createElement("td");
+        numberCell.className = "number";
+        numberCell.textContent = String(index + 1).padStart(2, "0");
+
+        const nameCell = document.createElement("td");
+        nameCell.className = "exercise-name";
+        nameCell.append(document.createTextNode(exercise.title));
+        const description = document.createElement("span");
+        description.className = "exercise-description";
+        description.textContent = exercise.description;
+        nameCell.append(description);
+
+        const form = document.createElement("form");
+        form.className = "exercise-form";
+        form.id = `exercise-form-${index + 1}`;
+        form.noValidate = true;
+        const inputCell = document.createElement("td");
+        const inputList = document.createElement("div");
+        inputList.className = "input-list";
+
+        exercise.fields.forEach((field) => {
+            const label = document.createElement("label");
+            const inputId = `exercise-${index + 1}-${field.key}`;
+            label.htmlFor = inputId;
+            label.textContent = field.label;
+
+            const input = document.createElement("input");
+            input.id = inputId;
+            input.name = field.key;
+            input.type = field.type || "number";
+            input.placeholder = field.placeholder;
+            input.required = true;
+            if (input.type === "number") {
+                input.step = "1";
+                if (field.min !== undefined) input.min = String(field.min);
+                if (field.max !== undefined) input.max = String(field.max);
+            }
+            label.append(input);
+            inputList.append(label);
+        });
+
+        form.append(inputList);
+        inputCell.append(form);
+
+        const buttonCell = document.createElement("td");
+        const button = document.createElement("button");
+        button.type = "submit";
+        button.setAttribute("form", form.id);
+        button.textContent = "Run";
+        buttonCell.append(button);
+
+        const resultCell = document.createElement("td");
+        const result = document.createElement("p");
+        result.className = "result";
+        result.setAttribute("aria-live", "polite");
+        result.textContent = "Enter values to begin.";
+        resultCell.append(result);
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (!form.reportValidity()) return;
+
+            const values = {};
+            exercise.fields.forEach((field) => {
+                const input = form.elements.namedItem(field.key);
+                values[field.key] = input.type === "number" ? Number(input.value) : input.value;
+            });
+
+            try {
+                result.textContent = exercise.run(values);
+                result.classList.add("has-result");
+            } catch (error) {
+                result.textContent = error.message;
+                result.classList.remove("has-result");
+            }
+        });
+
+        row.append(numberCell, nameCell, inputCell, buttonCell, resultCell);
+        rows.append(row);
+    });
+}
+
+renderExercises();
