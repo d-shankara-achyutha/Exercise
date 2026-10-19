@@ -1,4 +1,4 @@
-function space () {
+function space() {
     console.log("");
 }
 
@@ -49,7 +49,7 @@ document.getElementById("cricket-form").addEventListener("submit", function (eve
 
 
 
-space ()
+space()
 //Problem 2
 //Game Battle
 
@@ -135,3 +135,96 @@ try {
 } catch {
     // Keep the form usable if browser storage is unavailable.
 }
+
+
+
+//Rough Work
+//Problem 3
+// Printing "n" numbers
+
+let testNum = 5;
+let result = "";
+
+for (let i = 1; i <= testNum; i++) {
+    result += i + " ";
+}
+
+console.log(result.trim());
+
+
+
+//Problem 4
+//Even or Odd
+
+let checkNum = 14;
+
+if (checkNum % 2 === 0) {
+    console.log("Even");
+} else {
+    console.log("Odd");
+}
+
+
+
+//Problem 5
+//Largest of the Three
+
+let a = 12; b = 27; c = 19;
+
+if (a >= b && a >= c) {
+    console.log(`Largest: ${a}`);
+} else if (b >= a && b >= c) {
+    console.log(`Largest: ${b}`);
+} else {
+    console.log(`Largest: ${c}`);
+}
+
+
+
+//Problem 6
+//Sum of "n" numbers
+
+let numSum = 6;
+let sum = 0;
+
+for (let i = 1; i <= numSum; i++) {
+    sum = sum + i;
+}
+
+console.log(sum);
+
+
+
+//Problem 6
+//Multiplication table
+
+let tableNum = 3;
+
+for (let j = 1; j <= 10; j++) {
+    console.log(`${tableNum} * ${j} = ${tableNum * j}`);
+}
+
+
+
+//Problem 7
+//Counting the Digits
+
+ numCount = 5082; count = 0;
+
+if (num === 0) {
+    count = 1;
+} else {
+    while (num > 0) {
+        count++;
+        num = Math.floor(num / 10);
+    }
+}
+
+console.log(count);
+
+
+
+//Problem 8
+//Reversing the digits
+
+let numReverse = 40350; count 
