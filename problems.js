@@ -1,3 +1,285 @@
+/*
+Rough work — original drafts kept for reference (not executed).
+
+function space() {
+    console.log("");
+}
+
+// Problem 1: Cricket Strike Rate
+function strikeRate(runs, balls) {
+    return (runs / balls) * 100;
+}
+
+function playerType(runs, balls) {
+    if (runs === undefined || balls === undefined) return "Missing Arguments";
+    if (runs < 0 || balls <= 0) return "Invalid Output";
+    const rate = strikeRate(runs, balls);
+    if (rate >= 150) return "Power Hitter";
+    if (rate >= 100) return "Steady Batter";
+    return "Slow Batter";
+}
+
+// Problem 2: Game Battle
+function damage(attack, shield) {
+    const netDamage = attack - shield;
+    return netDamage > 0 ? netDamage : 0;
+}
+
+function healthLeft(health, attack, shield) {
+    const damageTaken = damage(attack, shield);
+    const remainingHealth = health - damageTaken;
+    return remainingHealth > 0 ? remainingHealth : 0;
+}
+
+function battleResult(health, attack, shield) {
+    const remainingHealth = healthLeft(health, attack, shield);
+    if (remainingHealth === 0) return "Player Defeated";
+    if (remainingHealth <= 30) return "Low Health";
+    return "Still Fighting";
+}
+
+document.getElementById("cricket-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const runs = Number(document.getElementById("runs").value);
+    const balls = Number(document.getElementById("balls").value);
+    const rate = strikeRate(runs, balls);
+    const category = playerType(runs, balls);
+    const result = `${category} - strike rate: ${rate.toFixed(1)}`;
+    document.getElementById("cricket-result").textContent = result;
+    console.log(result);
+});
+
+document.getElementById("battle-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const health = Number(document.getElementById("health").value);
+    const attack = Number(document.getElementById("attack").value);
+    const shield = Number(document.getElementById("shield").value);
+    const result = battleResult(health, attack, shield);
+    document.getElementById("battle-result").textContent = result;
+    console.log(result);
+});
+
+const inputStorageKey = "small-js-scenario-inputs";
+let savedInputs = {};
+try {
+    const storedInputs = localStorage.getItem(inputStorageKey);
+    const parsedInputs = storedInputs ? JSON.parse(storedInputs) : {};
+    if (parsedInputs && typeof parsedInputs === "object" && !Array.isArray(parsedInputs)) {
+        savedInputs = parsedInputs;
+    }
+} catch {
+    savedInputs = {};
+}
+
+document.querySelectorAll(".exercise-form input").forEach(function (input) {
+    if (Object.prototype.hasOwnProperty.call(savedInputs, input.id)) {
+        input.value = savedInputs[input.id];
+    }
+
+    function enforceMaximum() {
+        if (input.max !== "" && input.value !== "" && input.valueAsNumber > Number(input.max)) {
+            input.value = input.max;
+        }
+    }
+
+    enforceMaximum();
+    savedInputs[input.id] = input.value;
+    input.addEventListener("input", function () {
+        enforceMaximum();
+        savedInputs[input.id] = input.value;
+        try {
+            localStorage.setItem(inputStorageKey, JSON.stringify(savedInputs));
+        } catch {
+            // Keep the form usable if browser storage is unavailable.
+        }
+    });
+});
+
+try {
+    localStorage.setItem(inputStorageKey, JSON.stringify(savedInputs));
+} catch {
+    // Keep the form usable if browser storage is unavailable.
+}
+
+// Problems 3–22: first-pass solutions and sample calls
+function printNumbers(n) {
+    let result = "";
+    for (let i = 1; i <= n; i++) result += i + " ";
+    console.log(result.trim());
+}
+printNumbers(5);
+
+function checkEvenOdd(num) {
+    return num % 2 === 0 ? "Even" : "Odd";
+}
+console.log(checkEvenOdd(14));
+
+function largest(a, b, c) {
+    if (a >= b && a >= c) return `Largest: ${a}`;
+    if (b >= a && b >= c) return `Largest: ${b}`;
+    return `Largest: ${c}`;
+}
+console.log(largest(12, 27, 19));
+
+function sumNumbers(n) {
+    let sum = 0;
+    for (let i = 1; i <= n; i++) sum = sum + 1;
+    return sum;
+}
+console.log(sumNumbers(10));
+
+let tableNum = 3;
+for (let j = 1; j <= 10; j++) {
+    console.log(`${tableNum} * ${j} = ${tableNum * j}`);
+}
+
+function countDigits(num) {
+    let count = 0;
+    do {
+        count++;
+        num = Math.floor(num / 10);
+    } while (num > 0);
+    return count;
+}
+console.log(countDigits(5082));
+
+function reverseNumber(num) {
+    let rev = 0;
+    while (num > 0) {
+        rev = rev * 10 + (num % 10);
+        num = Math.floor(num / 10);
+    }
+    return rev;
+}
+console.log(reverseNumber(12040));
+
+function isPalindrome(num) {
+    const original = num;
+    let rev = 0;
+    while (num > 0) {
+        rev = rev * 10 + (num % 10);
+        num = Math.floor(num / 10);
+    }
+    return original === rev ? "Palindrome" : "Not Palindrome";
+}
+console.log(isPalindrome(1221));
+
+function factorial(num) {
+    let fact = 1;
+    for (let i = 1; i <= num; i++) fact = fact * i;
+    return fact;
+}
+console.log(factorial(5));
+
+function fibonacci(num) {
+    let a = 0, b = 1, result = "";
+    for (let i = 1; i <= num; i++) {
+        result += a + " ";
+        const c = a + b;
+        a = b;
+        b = c;
+    }
+    console.log(result.trim());
+}
+fibonacci(7);
+
+function isPrime(num) {
+    if (num < 2) return "Not Prime";
+    for (let i = 2; i < num; i++) {
+        if (num % i === 0) return "Not Prime";
+    }
+    return "Prime";
+}
+console.log(isPrime(17));
+
+function printPrimes(start, end) {
+    let result = "";
+    for (let num = start; num <= end; num++) {
+        if (isPrime(num)) result += num + " ";
+    }
+    console.log(result.trim());
+}
+printPrimes(10, 20);
+
+function findGCD(a, b) {
+    while (b !== 0) {
+        const temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+console.log(findGCD(18, 24));
+
+function isArmstrong(num) {
+    const original = num;
+    let temp = num;
+    let count = 0;
+    let sum = 0;
+    do {
+        count++;
+        temp = Math.floor(temp / 10);
+    } while (temp > 0);
+    temp = num;
+    while (temp > 0) {
+        const digit = temp % 10;
+        sum += digit ** count;
+        temp = Math.floor(temp / 10);
+    }
+    return sum === original ? "Armstrong Number" : "Not Armstrong Number";
+}
+console.log(isArmstrong(153));
+
+function countVowels(str) {
+    let count = 0;
+    str = str.toLowerCase();
+    for (let i = 0; i < str.length; i++) {
+        if ("aeiou".includes(str[i])) count++;
+    }
+    return count;
+}
+console.log(countVowels("JavaScript is fun - Only when learnt Properly"));
+
+function reverseString(str) {
+    let rev = "";
+    for (let i = str.length - 1; i >= 0; i--) rev += str[i];
+    return rev;
+}
+console.log(reverseString("Hello World"));
+
+function isStringPalindrome(str) {
+    str = str.toLowerCase().replaceAll("", "");
+    let rev = "";
+    for (let i = str.length - 1; i >= 0; i--) rev += str[i];
+    return str === rev ? "Palindrome" : "Not Palindrome";
+}
+console.log(isStringPalindrome("Neveroddoreven"));
+
+function largestElement(arr) {
+    let largest = arr[0];
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > largest) largest = arr[i];
+    }
+    return largest;
+}
+console.log(largestElement[5, 4, 19, 2, 3, 7]);
+
+function removeDuplicates(arr) {
+    return [...new Set(arr)];
+}
+console.log(removeDuplicates([7, 4, 2, 4, 5, 2, 7, 5]));
+
+function charfrequency(str) {
+    const freq = {};
+    for (const char of str) freq[char] = (freq[char] || 0) + 1;
+    console.log(freq);
+}
+charfrequency("banana");
+*/
+
+
+
+
 function strikeRate(runs, balls) {
     return (runs / balls) * 100;
 }
@@ -142,7 +424,7 @@ function parseNumberList(value) {
 }
 
 function largestElement(arr) {
-    return Math.max(...arr);
+    return arr.reduce((largest, value) => Math.max(largest, value));
 }
 
 function removeDuplicates(arr) {
@@ -310,29 +592,27 @@ const exercises = [
 ];
 
 function renderExercises() {
-    const rows = document.getElementById("exercise-rows");
+    const cards = document.getElementById("exercise-cards");
 
     exercises.forEach((exercise, index) => {
-        const row = document.createElement("tr");
-        const numberCell = document.createElement("td");
-        numberCell.className = "number";
-        numberCell.textContent = String(index + 1).padStart(2, "0");
+        const card = document.createElement("article");
+        card.className = "example";
 
-        const nameCell = document.createElement("td");
-        nameCell.className = "exercise-name";
-        nameCell.append(document.createTextNode(exercise.title));
+        const number = document.createElement("span");
+        number.className = "example-number";
+        number.textContent = `${String(index + 1).padStart(2, "0")} / JAVASCRIPT`;
+
+        const title = document.createElement("h2");
+        title.textContent = exercise.title;
         const description = document.createElement("span");
-        description.className = "exercise-description";
+        description.className = "example-description";
         description.textContent = exercise.description;
-        nameCell.append(description);
 
         const form = document.createElement("form");
         form.className = "exercise-form";
         form.id = `exercise-form-${index + 1}`;
-        form.noValidate = true;
-        const inputCell = document.createElement("td");
-        const inputList = document.createElement("div");
-        inputList.className = "input-list";
+        const fieldGrid = document.createElement("div");
+        fieldGrid.className = "field-grid";
 
         exercise.fields.forEach((field) => {
             const label = document.createElement("label");
@@ -352,25 +632,19 @@ function renderExercises() {
                 if (field.max !== undefined) input.max = String(field.max);
             }
             label.append(input);
-            inputList.append(label);
+            fieldGrid.append(label);
         });
 
-        form.append(inputList);
-        inputCell.append(form);
-
-        const buttonCell = document.createElement("td");
+        form.append(fieldGrid);
         const button = document.createElement("button");
         button.type = "submit";
-        button.setAttribute("form", form.id);
-        button.textContent = "Run";
-        buttonCell.append(button);
+        button.textContent = "Run exercise";
+        form.append(button);
 
-        const resultCell = document.createElement("td");
         const result = document.createElement("p");
         result.className = "result";
         result.setAttribute("aria-live", "polite");
         result.textContent = "Enter values to begin.";
-        resultCell.append(result);
 
         form.addEventListener("submit", (event) => {
             event.preventDefault();
@@ -391,8 +665,8 @@ function renderExercises() {
             }
         });
 
-        row.append(numberCell, nameCell, inputCell, buttonCell, resultCell);
-        rows.append(row);
+        card.append(number, title, description, form, result);
+        cards.append(card);
     });
 }
 
