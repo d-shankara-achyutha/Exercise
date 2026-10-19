@@ -142,57 +142,60 @@ try {
 //Problem 3
 // Printing "n" numbers
 
-let testNum = 5;
-let result = "";
+function printNumbers(n) {
+    let result = "";
 
-for (let i = 1; i <= testNum; i++) {
-    result += i + " ";
+    for (let i = 1; i <= n; i++) {
+        result += i + " ";
+    }
+    console.log(result.trim());
 }
 
-console.log(result.trim());
+printNumbers(5);
 
 
 
 //Problem 4
 //Even or Odd
 
-let checkNum = 14;
-
-if (checkNum % 2 === 0) {
-    console.log("Even");
-} else {
-    console.log("Odd");
+function checkEvenOdd(num) {
+    return num % 2 === 0 ? "Even" : "Odd";
 }
+
+console.log(checkEvenOdd(14));
 
 
 
 //Problem 5
 //Largest of the Three
 
-let a = 12; b = 27; c = 19;
-
-if (a >= b && a >= c) {
-    console.log(`Largest: ${a}`);
-} else if (b >= a && b >= c) {
-    console.log(`Largest: ${b}`);
-} else {
-    console.log(`Largest: ${c}`);
+function largest(a, b, c) {
+    if (a >= b && a >= c) {
+        return `Largest: ${a}`;
+    } else if (b >= a && b >= c) {
+        return `Largest: ${b}`;
+    } else {
+        return `Largest: ${c}`;
+    }
 }
+
+console.log(largest(12, 27, 19));
 
 
 
 //Problem 6
 //Sum of "n" numbers
 
-let numSum = 6;
-let sum = 0;
+function sumNumbers(n) {
+    let sum = 0;
 
-for (let i = 1; i <= numSum; i++) {
-    sum = sum + i;
+    for (let i = 1; i <= n; i++) {
+        sum = sum + 1;
+    }
+    return sum;
 }
 
-console.log(sum);
-
+console.log(sumNumbers(10));
 
 
 //Problem 6
@@ -208,23 +211,215 @@ for (let j = 1; j <= 10; j++) {
 
 //Problem 7
 //Counting the Digits
-
- numCount = 5082; count = 0;
-
-if (num === 0) {
-    count = 1;
-} else {
-    while (num > 0) {
+function countDigits(num) {
+    let count = 0;
+    do {
         count++;
         num = Math.floor(num / 10);
-    }
+    } while (num > 0);
+    return count;
 }
 
-console.log(count);
+console.log(countDigits(5082));
 
 
 
 //Problem 8
 //Reversing the digits
 
-let numReverse = 40350; count 
+function reverseNumber(num) {
+    let rev = 0;
+
+    while(num > 0) {
+        rev = rev * 10 + (num % 10);
+        num = Math.floor(num/10);
+    }
+    return rev;
+}
+
+console.log(reverseNumber(12040));
+
+
+
+//Problem 9
+//Check a palindrome
+
+function isPalindrome(num) {
+    let original = num;
+    let rev = 0;
+
+    while(num > 0) {
+        rev = rev*10 +(num %10);
+        num = Math.floor(num/10);
+    }
+
+    return original === rev ? "Palindrome" : "Not Palindrome"
+}
+
+console.log(isPalindrome(1221));
+
+
+
+//Problem 10
+//Factorial of a Number
+
+function factorial(num) {
+    let fact = 1;
+    
+    for(let i=1; i <= num; i++) {
+        fact = fact*i;
+    } 
+
+    return fact;
+}
+
+console.log(factorial(5));
+
+
+
+//Problem 11
+//Fibonacci Sequence
+
+function fibonacci(num) {
+    let a =0, b = 1, result = "";
+
+    for(let i = 1; i <= num; i++) {
+        result += a + " ";
+        let c = a + b;
+        a = b;
+        b = c;
+    }
+
+    console.log(result.trim());
+}
+
+fibonacci(7);
+
+
+
+//Problem 12
+//Check Prime Numbers
+
+function isPrime(num) {
+    if (num < 2) {
+        return "Not Prime";
+    }
+
+    for(let i = 2; i < num; i++) {
+        if(num % i === 0) {
+            return "Not Prime";
+        }
+    }
+
+    return "Prime";
+}
+
+console.log(isPrime(17));
+
+
+
+//Prolem 13
+//Printing all Prime Numbers in a Range
+
+function isPrime(num) {
+    if (num < 2) {
+        return "Not Prime";
+    }
+
+    for(let i = 2; i < num; i++) {
+        if(num % i === 0) {
+            return "Not Prime";
+        }
+    }
+
+    return "Prime";
+}
+
+function printPrimes(start, end) {
+    let result = "";
+
+    for (let num = start; num <= end; num++) {
+        if(isPrime(num)) {
+            result += num + " ";
+        }
+    }
+    console.log(result.trim());
+}
+
+printPrimes(10, 20);
+
+//Problem 14
+//Greatest Common Divisor
+
+function findGCD(a, b) {
+    while(b !== 0) {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+console.log(findGCD(18, 24));
+
+//Problem 15
+//Check Armstrong Number
+
+function isArmstrong(num) {
+    let original = num;
+    let temp = num;
+    let count = 0;
+    let sum = 0;
+
+    do {
+        count++;
+        temp = Math.floor(temp/10);
+    } while (temp > 0);
+
+        temp = num;
+
+        while(temp >0) {
+            let digit = temp % 10;
+            sum += digit ** count;
+            temp = Math.floor(temp/10);
+        }
+
+        return sum === original ? "Armstrong Number" : "Not Armstrong Number"   
+}
+
+console.log(isArmstrong(153));
+
+
+
+//Problem 16
+//Counting Vowels in a String(Ignoring Vowels)
+
+function countVowels(str) {
+    let count = 0;
+    str = str.toLowerCase();
+
+    for (let i = 0; i < str.length; i++) {
+        if("aeiou".includes(str[i])) {
+            count++;
+        }
+    }
+    return count;
+}
+
+console.log(countVowels("JavaScript is fun - Only when learnt Properly"));
+
+
+
+//Prolem 17
+//Reversing a String
+
+function reverseString(str) {
+    let rev = "";
+
+    for(let i=str,length - 1; i >= 0; i--) {
+        rev += str[i]
+    }
+    return rev;
+}
+
+console.log(reverseString("Hello World"));
