@@ -101,7 +101,8 @@ try {
     // Keep the form usable if browser storage is unavailable.
 }
 
-// Problems 3–22: first-pass solutions and sample calls
+// Problem 3
+//
 function printNumbers(n) {
     let result = "";
     for (let i = 1; i <= n; i++) result += i + " ";
@@ -109,11 +110,15 @@ function printNumbers(n) {
 }
 printNumbers(5);
 
+//Problem 4
+//
 function checkEvenOdd(num) {
     return num % 2 === 0 ? "Even" : "Odd";
 }
 console.log(checkEvenOdd(14));
 
+//Problem 5
+//
 function largest(a, b, c) {
     if (a >= b && a >= c) return `Largest: ${a}`;
     if (b >= a && b >= c) return `Largest: ${b}`;
@@ -121,6 +126,8 @@ function largest(a, b, c) {
 }
 console.log(largest(12, 27, 19));
 
+//Problem 6
+//
 function sumNumbers(n) {
     let sum = 0;
     for (let i = 1; i <= n; i++) sum = sum + 1;
@@ -128,11 +135,15 @@ function sumNumbers(n) {
 }
 console.log(sumNumbers(10));
 
+Problem 7
+//
 let tableNum = 3;
 for (let j = 1; j <= 10; j++) {
     console.log(`${tableNum} * ${j} = ${tableNum * j}`);
 }
 
+//Problem 8
+//
 function countDigits(num) {
     let count = 0;
     do {
@@ -143,6 +154,8 @@ function countDigits(num) {
 }
 console.log(countDigits(5082));
 
+//Problem 9
+//
 function reverseNumber(num) {
     let rev = 0;
     while (num > 0) {
@@ -153,6 +166,8 @@ function reverseNumber(num) {
 }
 console.log(reverseNumber(12040));
 
+//Problem 10
+//
 function isPalindrome(num) {
     const original = num;
     let rev = 0;
@@ -164,6 +179,8 @@ function isPalindrome(num) {
 }
 console.log(isPalindrome(1221));
 
+//Problem 11
+//
 function factorial(num) {
     let fact = 1;
     for (let i = 1; i <= num; i++) fact = fact * i;
@@ -171,6 +188,8 @@ function factorial(num) {
 }
 console.log(factorial(5));
 
+//Problem 12
+//
 function fibonacci(num) {
     let a = 0, b = 1, result = "";
     for (let i = 1; i <= num; i++) {
@@ -183,6 +202,8 @@ function fibonacci(num) {
 }
 fibonacci(7);
 
+//Problem 13
+//
 function isPrime(num) {
     if (num < 2) return "Not Prime";
     for (let i = 2; i < num; i++) {
@@ -192,6 +213,8 @@ function isPrime(num) {
 }
 console.log(isPrime(17));
 
+//Problem 14
+//
 function printPrimes(start, end) {
     let result = "";
     for (let num = start; num <= end; num++) {
@@ -201,6 +224,8 @@ function printPrimes(start, end) {
 }
 printPrimes(10, 20);
 
+//Problem 15
+//
 function findGCD(a, b) {
     while (b !== 0) {
         const temp = b;
@@ -211,6 +236,8 @@ function findGCD(a, b) {
 }
 console.log(findGCD(18, 24));
 
+//Problem 16
+//
 function isArmstrong(num) {
     const original = num;
     let temp = num;
@@ -230,6 +257,8 @@ function isArmstrong(num) {
 }
 console.log(isArmstrong(153));
 
+//Problem 17
+//
 function countVowels(str) {
     let count = 0;
     str = str.toLowerCase();
@@ -240,6 +269,8 @@ function countVowels(str) {
 }
 console.log(countVowels("JavaScript is fun - Only when learnt Properly"));
 
+//Problem 18
+//
 function reverseString(str) {
     let rev = "";
     for (let i = str.length - 1; i >= 0; i--) rev += str[i];
@@ -255,6 +286,8 @@ function isStringPalindrome(str) {
 }
 console.log(isStringPalindrome("Neveroddoreven"));
 
+//Problem 19
+//
 function largestElement(arr) {
     let largest = arr[0];
     for (let i = 0; i < arr.length; i++) {
@@ -264,11 +297,15 @@ function largestElement(arr) {
 }
 console.log(largestElement[5, 4, 19, 2, 3, 7]);
 
+//Problem 20
+//
 function removeDuplicates(arr) {
     return [...new Set(arr)];
 }
 console.log(removeDuplicates([7, 4, 2, 4, 5, 2, 7, 5]));
 
+//Problem 21
+//
 function charfrequency(str) {
     const freq = {};
     for (const char of str) freq[char] = (freq[char] || 0) + 1;
